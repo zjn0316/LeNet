@@ -1,0 +1,11 @@
+train:
+  epochs: 100
+  learning_rate: 0.001
+  batch_size: 8
+
+data:
+  root: './data'
+  download: true
+
+model:
+  save_path: './checkpoints/checkpoint.pth'
