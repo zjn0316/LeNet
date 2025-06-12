@@ -8,21 +8,23 @@ root_dir = os.path.dirname(current_dir)
 sys.path.append(root_dir)
 
 from LeNet.utils.dataloader import get_dataloaders, show_sample_images
+from LeNet.utils.args_parser import parse_args,get_config
 from LeNet.utils.train import train
 from LeNet.utils.test import test
 
 
-def main():
-    # 读取配置文件
-    with open(os.path.join(root_dir, 'LeNet/configs/config.yaml'), 'r') as f:
-        config = yaml.safe_load(f)
 
-    # 提取需要的参数
+def main():
+    # 解析命令行参数
+    args = parse_args()
+
+    # 获取配置，命令行参数优先级高于配置文件
+    config = get_config(args, os.path.join(root_dir, args.config))
     batch_size = config['train']['batch_size']
-    epochs = config['train']['epochs']
-    learning_rate = config['train']['learning_rate']
     data_root = config['data']['root']
     download = config['data']['download']
+    epochs = config['train']['epochs']
+    learning_rate = config['train']['learning_rate']
     save_path = config['model']['save_path']
 
     # 获取数据加载器
